@@ -1,0 +1,108 @@
+#include <iostream>
+#include <cmath>
+#include <iomanip>
+#include <cstdio>
+#include <cstddef>
+#include <typeinfo>
+using namespace std;
+
+class Invoice
+{
+private:
+	string partNumber;
+	string partDescription;
+	int quantity;
+	double price;
+public:
+
+	Invoice(string partNumber, string partDescription, int quantity, double price)
+	{
+		this->partNumber = partNumber;
+		this->partDescription = partDescription;
+			
+		if (quantity < 0) {
+			this->quantity = 0;
+		}
+		else {
+			this->quantity = quantity;
+		}
+		if (price < 0) {
+			this->price = 0;
+		}
+		else {
+			this->price = price;
+		}
+		if (quantity > 999) {
+			throw runtime_error("quantity's maximun is 999.");
+		}
+		
+	}
+
+	
+	string getPartNumber() {
+		return partNumber;
+	}
+	void setPartNumber(string partNumber) {
+		this->partNumber = partNumber;
+	}
+	string getPartDescription() {
+		return partDescription;
+	}
+	void setPartDescription(string partDescription) {
+		this->partDescription = partDescription;
+	}
+	int getQuantity() {
+		return quantity;
+	}
+	void setQuantity(int quantity) {
+		this->quantity = quantity;
+	}
+	double getPrice() {
+		return price;
+	}
+	void setPrice(double price) {
+		this->price = price;
+	}
+	double getInvoiceAmount()
+	{
+		return quantity * price;
+	}
+};
+
+int main()
+{
+	string partNumber;
+	string partDescription;
+	int quantity;
+	double price;
+
+	try {
+		cout << "Enter Part Number: ";
+		cin >> partNumber;
+
+		cin.ignore();
+		cout << "Enter Part Description: ";
+		std::getline(std::cin, partDescription);
+
+		cout << "Enter quantity: ";
+		cin >> quantity;
+
+		cout << "Enter Price: $";
+		cin >> price;
+
+		Invoice in(partNumber, partDescription, quantity, price);
+		
+		cout << "\n\n--------------------" << endl;
+		cout << "Part Number: " << in.getPartNumber() << endl;
+		cout << "Part description: " << in.getPartDescription() << endl;
+		cout << "Quantity: " << in.getQuantity() << endl;
+		cout << "Price per item: $" << in.getPrice() << endl;
+		cout << "Invoice amount: $" << in.getInvoiceAmount() << endl;
+		cout << "--------------------" << endl;
+		return 0;
+	}
+	catch (runtime_error &excpt) {
+		cout << excpt.what() << endl;
+		cout << "Please enter the valid quantity under 1000." << endl;
+	}
+}
