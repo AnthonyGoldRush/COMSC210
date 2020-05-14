@@ -1,2 +1,2 @@
-# COMSC210
+# DS
 Data Structure
